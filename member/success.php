@@ -11,6 +11,9 @@
 <?php
 
 include "../function.php";
+
+$d1=find('member',1);
+
 $rows=all("member");
 
 $dsn="mysql:host=localhost;charset=utf8;dbname=crud";
