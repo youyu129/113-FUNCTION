@@ -9,6 +9,10 @@
     <h1>登入成功</h1>
 
 <?php
+
+include "../function.php";
+$rows=all("member");
+
 $dsn="mysql:host=localhost;charset=utf8;dbname=crud";
 $pdo=new PDO($dsn,'root','');
 

@@ -85,6 +85,20 @@ function starts($shape,$line){
             break;  
         }
         }
+function all($table){
+    // 連線資料庫
+    $dsn="mysql:host=localhost;charset=utf8;dbname=crud";
+    $pdo=new PDO($dsn,'root','');
+    $sql="select * from $table";
+    // 判斷是否有該資料表
+    $rows=$pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+
+    // return整個資料表的資料
+    return $rows;
+}
+
+
+
 ?>
 </div>
 </body>
