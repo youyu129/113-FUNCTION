@@ -80,6 +80,7 @@
         .home {
             text-align: center;
         }
+
     </style>
 </head>
 
@@ -129,6 +130,10 @@
     <div class="home">
         <a href="index.html">回首頁</a>
     </div>
+    <?php
+    include "../function.php";
+    starts(15);
+    ?>
 </body>
 
 </html>

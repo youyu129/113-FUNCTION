@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            font-family: 'courier new';
+        }
+        h3 {
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div>
+<!-- <h3>用form表單</h3> -->
+<!-- <form action="?">
+    <input type="number" name="line" id="">
+    <button type="submit">submit</button>
+</form>
+<?php
+
+$line = (isset($_GET['line']))?$_GET['line']:5;
+
+for($i=0;$i<$line;$i++){
+
+for($k=0;$k<($line-1-$i);$k++){
+echo "&nbsp";
+}
+
+for($j=0;$j<(2*$i+1);$j++){
+    echo "*";
+}
+echo "<br>";
+}    
+?> -->
+</div>
+
+<div>
+<h3>用function</h3>
+
+<?php
+
+$line = (isset($_GET['line']))?$_GET['line']:5;
+
+
+function starts($line){
+for($i=0;$i<$line;$i++){
+
+for($k=0;$k<($line-1-$i);$k++){
+echo "&nbsp";
+}
+
+for($j=0;$j<(2*$i+1);$j++){
+    echo "*";
+}
+echo "<br>";
+}    
+}
+?>
+</div>
+</body>
+</html>
