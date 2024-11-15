@@ -111,8 +111,12 @@ function pdo($db){
 * @return array
 */
 function all($table){
+    // 把$pdo當全域變數使用 (是外面的$pdo)
+    global $pdo;
+    
     // 連線資料庫
-    $pdo=pdo('crud');
+    // $pdo=pdo('crud');
+
     $sql="select * from $table";
     // 判斷是否有該資料表
     $rows=$pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
@@ -128,6 +132,9 @@ function all($table){
 * @return array
 */
 function find($table,$id){
+    $sql=" select * from $table where ";
+    $pdo=pdo('crud');
+    
     if(is_array($id)){
         $tmp=[];
         foreach($id as $key => $value){
@@ -140,16 +147,73 @@ function find($table,$id){
             //$key要是字串，如果是數字會變成錯誤
             $tmp[]="`$key`='$value'";
         }
-
+        $sql=$sql.join(" && ",$tmp);
     }else{
-        // 連線資料庫
-        $pdo=pdo('crud');
-        $rows=$pdo->query($sql)->fetch(PDO::FETCH_ASSOC);
+        $sql= $sql . "`id`='$id'";
     }
-    $sql="select * from $table where id='$id'";
-
+    $rows=$pdo->query($sql)->fetch(PDO::FETCH_ASSOC);
+    
     // return整個資料表的資料
     return $rows;
+}
+
+/*
+* 更新指定條件的資料
+* @param string $table 資料表名稱
+* @param array $array 更新的欄位及內容
+* @param array || number $id 條件(數字或陣列)
+* @return boolean
+*/
+function update($table,$array,$id){
+    $sql="update $table set"; 
+    $pdo=pdo('crud');
+    
+    $tmp=[];
+    
+    foreach($array as $key => $value){
+        $tmp[]="`$key`='$value'";
+    }
+    $sql=$sql . join(",",$tmp);
+
+    // 如果他是陣列
+    if(is_array($id)){
+        foreach($id as $key => $value){
+            $tmp[]="`$key`='$value'";
+        }
+        $sql= $sql . " where " . join(" && ",$tmp);
+    }else{
+        // 如果他不是陣列，他就是id
+        $sql= $sql . " where `id`='$id'";
+    }
+
+    //  > 0 代表更新有成功，0 代表沒有資料受到影響
+    return $pdo->exec($sql);
+}
+
+//update執行function
+update('member',['acc'=>'19'],13); 
+
+/*
+* 刪除指定條件的資料
+* @param string $table 資料表名稱
+* @param integer $id 條件 (數字或陣列)
+* @return void 
+*/
+function del($table,$id){
+    $pdo=pdo('crud');
+    
+    if(is_array($id)){
+        $tmp=[];
+        foreach($id as $key => $value){
+
+            $tmp[]="`$key`='$value'";
+        }
+        $sql="delete from $table where ".join(" && ",$tmp);
+    }else{
+        $sql="delete from $table where id='$id'";
+    }
+    // 不需要回傳資料
+    return $pdo->exec($sql);
 }
 
 /*
