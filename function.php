@@ -124,14 +124,27 @@ function all($table){
 /*
 * 回傳指定資料表的特定ID的單筆資料
 * @param string $table 資料表名稱
-* @param integer $id 資料表ID
+* @param integer $id || array $id 資料表ID
 * @return array
 */
 function find($table,$id){
-    // 連線資料庫
-    $pdo=pdo('crud');
+    if(is_array($id)){
+        $tmp=[];
+        foreach($id as $key => $value){
+            // string print format
+            // %s = 字串
+            // sprintf("`%s`=`%s`",$key,$value)
+            
+            //$key要是字串，如果是數字會變成錯誤
+            $tmp[]="`$key`='$value'";
+        }
+
+    }else{
+        // 連線資料庫
+        $pdo=pdo('crud');
+        $rows=$pdo->query($sql)->fetch(PDO::FETCH_ASSOC);
+    }
     $sql="select * from $table where id='$id'";
-    $rows=$pdo->query($sql)->fetch(PDO::FETCH_ASSOC);
 
     // return整個資料表的資料
     return $rows;
