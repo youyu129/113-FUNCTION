@@ -131,10 +131,12 @@ function find($table,$id){
     if(is_array($id)){
         $tmp=[];
         foreach($id as $key => $value){
+            // 正式寫法
             // string print format
             // %s = 字串
             // sprintf("`%s`=`%s`",$key,$value)
             
+            //趕時間寫法
             //$key要是字串，如果是數字會變成錯誤
             $tmp[]="`$key`='$value'";
         }

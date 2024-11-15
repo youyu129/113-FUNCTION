@@ -7,9 +7,8 @@
 </head>
 <body>
     <?php
-    $dsn="mysql:host=localhost;charset=utf8;dbname=crud";
-    $pdo=new PDO ($dsn,'root','');
-
+    include "../function.php";
+    
     if (!isset($_POST['acc'])){
         header("location:login2.php");
         exit();
@@ -18,24 +17,26 @@
     $acc=$_POST['acc'];
     $pw=$_POST['pw'];
     
+    $row=find('member',['acc'=>$acc,'pw'=>$pw]);
+
     // 全部欄位都撈
     // $sql="select * from `member` where `acc`='$acc' && `pw`='$pw'";
     
     // 只撈一欄
-    $sql="select count(id) from `member` where `acc`='$acc' && `pw`='$pw'";
+    // $sql="select count(id) from `member` where `acc`='$acc' && `pw`='$pw'";
     
     // 取回的是陣列
     // $row=$pdo->query($sql)->(PDO::FETCH_ASSOC);
     
     // 取回的只有 1
-    $row=$pdo->query($sql)->fetchColumn();
+    // $row=$pdo->query($sql)->fetchColumn();
 
     // 用來檢查
     // echo"<pre>";
     // print_r($row);
     // echo"</pre>";
 
-    $pdo->query($sql);
+    // $pdo->query($sql);
 
     // if($acc==$row['acc'] && $pw==$row['pw']){
     if($row>=1){
