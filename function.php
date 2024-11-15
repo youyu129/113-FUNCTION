@@ -190,8 +190,8 @@ function update($table,$array,$id){
     return $pdo->exec($sql);
 }
 
-//update執行function
-update('member',['acc'=>'19'],13); 
+//update 執行function
+// update('member',['acc'=>'19'],13); 
 
 /*
 * 刪除指定條件的資料
@@ -215,6 +215,27 @@ function del($table,$id){
     // 不需要回傳資料
     return $pdo->exec($sql);
 }
+/*
+* 新增資料
+* @param string $table 資料表名稱
+* @param string $cols 新增的欄位字串
+* @param string $values 新增的值字串
+* @return boolean
+*/
+function insert($table,$array){
+    $pdo=pdo('crud');
+    $sql="insert into $table ";
+    $keys=array_keys($array);
+    
+    $sql=$sql . "(`".join("`,`",$keys)."`) values ('".join("'.'",$array)."')";    
+    return $pdo->exec($sql);
+}
+
+// 執行insert function
+insert("member",["acc"=>21,
+                 "pw"=>21,
+                 "email"=>"20@gmail.com",
+                 "tel","0912345678"]);
 
 /*
 * 列出陣列內容
