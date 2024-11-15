@@ -132,7 +132,7 @@
     </div>
     <?php
     include "../function.php";
-    starts(15);
+    starts('菱形',15);
     ?>
 </body>
 
